@@ -1,0 +1,35 @@
+# Build
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# VS / VS Code
+.vs/
+.vscode/
+
+# Logs
+*.log
+
+# Database (SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Publish
+publish/
+
+# Node (caso use frontend libs)
+node_modules/
+
+# Docker
+docker-compose.override.yml

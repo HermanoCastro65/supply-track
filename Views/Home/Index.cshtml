@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">SupplyTrack</h1>
+    <p class="text-center text-muted mb-5">
+        Sistema de controle de estoque e movimentações
+    </p>
+
+    <div class="row g-4">
+
+        <!-- MERCADORIAS -->
+        <div class="col-md-4">
+            <div class="card shadow h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Mercadorias</h5>
+                    <p class="card-text">Gerencie produtos cadastrados</p>
+                    <a href="/Mercadorias" class="btn btn-primary">
+                        Acessar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOVIMENTAÇÕES -->
+        <div class="col-md-4">
+            <div class="card shadow h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Movimentações</h5>
+                    <p class="card-text">Controle entradas e saídas</p>
+                    <a href="/Movimentacoes" class="btn btn-success">
+                        Acessar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="col-md-4">
+            <div class="card shadow h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Gráficos</h5>
+                    <p class="card-text">Visualize relatórios</p>
+                    <a href="/Graficos" class="btn btn-dark">
+                        Ver gráficos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
