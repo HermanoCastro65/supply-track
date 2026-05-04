@@ -198,15 +198,26 @@ namespace SupplyTrack.Controllers
 
         public IActionResult ExportarCSV()
         {
-            var dados = _context.Movimentacoes.ToList();
-            var csv = "Id,Quantidade,Data\n";
+            var dados = _context.Movimentacoes
+                .Include(m => m.Mercadoria)
+                .ToList();
+
+            var sb = new System.Text.StringBuilder();
+
+            // Cabeçalho com ;
+            sb.AppendLine("Id;Mercadoria;Quantidade;DataHora;Tipo;Observacao");
 
             foreach (var item in dados)
             {
-                csv += $"{item.Id},{item.Quantidade},{item.DataHora}\n";
+                sb.AppendLine($"{item.Id};" +
+                              $"{item.Mercadoria?.Nome};" +
+                              $"{item.Quantidade};" +
+                              $"{item.DataHora:dd/MM/yyyy HH:mm:ss};" +
+                              $"{item.Tipo};" +
+                              $"{item.Observacao}");
             }
 
-            return File(System.Text.Encoding.UTF8.GetBytes(csv), "text/csv", "relatorio.csv");
+            return File(System.Text.Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "relatorio.csv");
         }
 
         private bool MovimentacaoExists(int id)
