@@ -10,6 +10,7 @@
     <a asp-action="Create" class="btn btn-primary">Create New</a>
     <a asp-action="ExportarCSV" class="btn btn-success">Exportar CSV</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -45,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.DataHora)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Tipo)
+                    @item.Tipo.ToString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Observacao)

@@ -1,3 +1,5 @@
+using SupplyTrack.Enums;
+
 namespace SupplyTrack.Models
 {
     public class Movimentacao
@@ -10,7 +12,7 @@ namespace SupplyTrack.Models
         public int Quantidade { get; set; }
         public DateTime DataHora { get; set; }
 
-        public string Tipo { get; set; } = string.Empty; // Entrada ou Saída
+        public TipoMovimentacao Tipo { get; set; }
         public string Observacao { get; set; } = string.Empty;
     }
 }

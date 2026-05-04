@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SupplyTrack.Data;
 using SupplyTrack.Models;
+using SupplyTrack.Enums;
 
 namespace SupplyTrack.Controllers
 {
@@ -38,6 +39,7 @@ namespace SupplyTrack.Controllers
             var movimentacao = await _context.Movimentacoes
                 .Include(m => m.Mercadoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (movimentacao == null)
             {
                 return NotFound();
@@ -49,24 +51,56 @@ namespace SupplyTrack.Controllers
         // GET: Movimentacoes/Create
         public IActionResult Create()
         {
-            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Id");
+            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Nome");
+            ViewData["Tipos"] = new SelectList(Enum.GetValues(typeof(TipoMovimentacao)));
             return View();
         }
 
         // POST: Movimentacoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,MercadoriaId,Quantidade,DataHora,Tipo,Observacao")] Movimentacao movimentacao)
         {
+            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Nome", movimentacao.MercadoriaId);
+            ViewData["Tipos"] = new SelectList(Enum.GetValues(typeof(TipoMovimentacao)), movimentacao.Tipo);
+
+            var mercadoria = await _context.Mercadorias
+                .FirstOrDefaultAsync(m => m.Id == movimentacao.MercadoriaId);
+
+            if (mercadoria == null)
+            {
+                ModelState.AddModelError("", "Mercadoria não encontrada.");
+            }
+
+            if (movimentacao.Tipo == TipoMovimentacao.Saida && mercadoria != null)
+            {
+                if (mercadoria.QuantidadeEstoque < movimentacao.Quantidade)
+                {
+                    ModelState.AddModelError("", "Estoque insuficiente.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
+                if (mercadoria != null)
+                {
+                    if (movimentacao.Tipo == TipoMovimentacao.Entrada)
+                    {
+                        mercadoria.QuantidadeEstoque += movimentacao.Quantidade;
+                    }
+                    else if (movimentacao.Tipo == TipoMovimentacao.Saida)
+                    {
+                        mercadoria.QuantidadeEstoque -= movimentacao.Quantidade;
+                    }
+
+                    _context.Update(mercadoria);
+                }
+
                 _context.Add(movimentacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Id", movimentacao.MercadoriaId);
+
             return View(movimentacao);
         }
 
@@ -83,13 +117,14 @@ namespace SupplyTrack.Controllers
             {
                 return NotFound();
             }
-            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Id", movimentacao.MercadoriaId);
+
+            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Nome", movimentacao.MercadoriaId);
+            ViewData["Tipos"] = new SelectList(Enum.GetValues(typeof(TipoMovimentacao)), movimentacao.Tipo);
+
             return View(movimentacao);
         }
 
         // POST: Movimentacoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MercadoriaId,Quantidade,DataHora,Tipo,Observacao")] Movimentacao movimentacao)
@@ -98,6 +133,9 @@ namespace SupplyTrack.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Id", movimentacao.MercadoriaId);
+            ViewData["Tipos"] = new SelectList(Enum.GetValues(typeof(TipoMovimentacao)), movimentacao.Tipo);
 
             if (ModelState.IsValid)
             {
@@ -119,7 +157,7 @@ namespace SupplyTrack.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MercadoriaId"] = new SelectList(_context.Mercadorias, "Id", "Id", movimentacao.MercadoriaId);
+
             return View(movimentacao);
         }
 
@@ -134,6 +172,7 @@ namespace SupplyTrack.Controllers
             var movimentacao = await _context.Movimentacoes
                 .Include(m => m.Mercadoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (movimentacao == null)
             {
                 return NotFound();
@@ -156,10 +195,10 @@ namespace SupplyTrack.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         public IActionResult ExportarCSV()
         {
             var dados = _context.Movimentacoes.ToList();
-
             var csv = "Id,Quantidade,Data\n";
 
             foreach (var item in dados)
@@ -167,14 +206,12 @@ namespace SupplyTrack.Controllers
                 csv += $"{item.Id},{item.Quantidade},{item.DataHora}\n";
             }
 
-            return File(System.Text.Encoding.UTF8.GetBytes(csv),
-                "text/csv", "relatorio.csv");
+            return File(System.Text.Encoding.UTF8.GetBytes(csv), "text/csv", "relatorio.csv");
         }
+
         private bool MovimentacaoExists(int id)
         {
             return _context.Movimentacoes.Any(e => e.Id == id);
         }
-
-
     }
 }
