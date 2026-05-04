@@ -1,32 +1,73 @@
-@model IEnumerable<SupplyTrack.Models.Movimentacao>
-
 @{
     ViewData["Title"] = "Gráficos";
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">Movimentações por Tipo</h2>
 
-    <canvas id="grafico"></canvas>
+    <h2 class="mb-4 text-center">Estoque por Mercadoria</h2>
+    <canvas id="graficoEstoque"></canvas>
+
+    <hr class="my-5" />
+
+    <h2 class="mb-4 text-center">Entradas x Saídas por Mês e Mercadoria</h2>
+    <canvas id="graficoMes"></canvas>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    const dados = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+    const estoque = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Estoque));
+    const porMes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.PorMes));
 
-    const entradas = dados.filter(x => x.Tipo === "Entrada").length;
-    const saidas = dados.filter(x => x.Tipo === "Saída").length;
+    // ===== GRÁFICO ESTOQUE =====
+    const nomes = estoque.map(x => x.nome);
+    const quantidades = estoque.map(x => x.quantidade);
 
-    const ctx = document.getElementById('grafico');
-
-    new Chart(ctx, {
-    type: 'pie',
+    new Chart(document.getElementById('graficoEstoque'), {
+    type: 'bar',
     data: {
-    labels: ['Entradas', 'Saídas'],
+    labels: nomes,
     datasets: [{
-    data: [entradas, saidas]
+    label: 'Quantidade em Estoque',
+    data: quantidades
     }]
+    }
+    });
+
+    // ===== ORGANIZA DADOS POR MERCADORIA =====
+    const agrupado = {};
+
+    porMes.forEach(item => {
+    const key = item.mercadoria + " - " + item.mes;
+
+    if (!agrupado[key]) {
+    agrupado[key] = {
+    label: key,
+    entradas: item.entradas,
+    saidas: item.saidas
+    };
+    }
+    });
+
+    const labels = Object.keys(agrupado);
+    const entradas = labels.map(l => agrupado[l].entradas);
+    const saidas = labels.map(l => agrupado[l].saidas);
+
+    new Chart(document.getElementById('graficoMes'), {
+    type: 'bar',
+    data: {
+    labels: labels,
+    datasets: [
+    {
+    label: 'Entradas',
+    data: entradas
+    },
+    {
+    label: 'Saídas',
+    data: saidas
+    }
+    ]
     }
     });
 </script>

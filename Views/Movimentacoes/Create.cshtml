@@ -12,30 +12,36 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="MercadoriaId" class="control-label"></label>
-                <select asp-for="MercadoriaId" class ="form-control" asp-items="ViewBag.MercadoriaId"></select>
+                <select asp-for="MercadoriaId" class="form-control" asp-items="ViewBag.MercadoriaId"></select>
             </div>
+
             <div class="form-group">
                 <label asp-for="Quantidade" class="control-label"></label>
                 <input asp-for="Quantidade" class="form-control" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DataHora" class="control-label"></label>
                 <input asp-for="DataHora" class="form-control" />
                 <span asp-validation-for="DataHora" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
+                <select asp-for="Tipo" class="form-control" asp-items="ViewBag.Tipos"></select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Observacao" class="control-label"></label>
                 <input asp-for="Observacao" class="form-control" />
                 <span asp-validation-for="Observacao" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -48,5 +54,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
