@@ -34,18 +34,15 @@
     const estoque = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Estoque));
     const porMes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.PorMes));
 
-    // ===== GRÁFICO ESTOQUE =====
-    const nomes = estoque.map(x => x.nome);
-    const quantidades = estoque.map(x => x.quantidade);
-
+    /* ===== GRÁFICO ESTOQUE ===== */
     new Chart(document.getElementById('graficoEstoque'), {
     type: 'bar',
     data: {
-    labels: nomes,
+    labels: estoque.map(x => x.nome),
     datasets: [{
     label: 'Quantidade em Estoque',
-    data: quantidades,
-    backgroundColor: '#3b82f6',
+    data: estoque.map(x => x.quantidade),
+    backgroundColor: '#475569', // cinza azulado elegante
     borderRadius: 6
     }]
     },
@@ -58,7 +55,7 @@
     y: {
     beginAtZero: true,
     grid: {
-    color: '#e5e7eb'
+    color: '#e2e8f0'
     }
     },
     x: {
@@ -70,7 +67,7 @@
     }
     });
 
-    // ===== ORGANIZA DADOS POR MERCADORIA =====
+    /* ===== ORGANIZA DADOS ===== */
     const agrupado = {};
 
     porMes.forEach(item => {
@@ -78,7 +75,6 @@
 
     if (!agrupado[key]) {
     agrupado[key] = {
-    label: key,
     entradas: item.entradas,
     saidas: item.saidas
     };
@@ -89,6 +85,7 @@
     const entradas = labels.map(l => agrupado[l].entradas);
     const saidas = labels.map(l => agrupado[l].saidas);
 
+    /* ===== GRÁFICO ENTRADAS x SAÍDAS ===== */
     new Chart(document.getElementById('graficoMes'), {
     type: 'bar',
     data: {
@@ -97,13 +94,13 @@
     {
     label: 'Entradas',
     data: entradas,
-    backgroundColor: '#22c55e',
+    backgroundColor: '#4b7c5f', // verde sóbrio
     borderRadius: 6
     },
     {
     label: 'Saídas',
     data: saidas,
-    backgroundColor: '#ef4444',
+    backgroundColor: '#8b5e5e', // vermelho sóbrio
     borderRadius: 6
     }
     ]
@@ -112,14 +109,20 @@
     responsive: true,
     plugins: {
     legend: {
-    position: 'top'
+    position: 'top',
+    labels: {
+    color: '#334155',
+    font: {
+    size: 12
+    }
+    }
     }
     },
     scales: {
     y: {
     beginAtZero: true,
     grid: {
-    color: '#e5e7eb'
+    color: '#e2e8f0'
     }
     },
     x: {
