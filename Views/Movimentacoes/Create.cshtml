@@ -1,56 +1,65 @@
 @model SupplyTrack.Models.Movimentacao
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nova Movimentação";
 }
 
-<h1>Create</h1>
+<div class="container-fluid dashboard-container">
 
-<h4>Movimentacao</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="MercadoriaId" class="control-label"></label>
-                <select asp-for="MercadoriaId" class="form-control" asp-items="ViewBag.MercadoriaId"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Quantidade" class="control-label"></label>
-                <input asp-for="Quantidade" class="form-control" />
-                <span asp-validation-for="Quantidade" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="DataHora" class="control-label"></label>
-                <input asp-for="DataHora" class="form-control" />
-                <span asp-validation-for="DataHora" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <select asp-for="Tipo" class="form-control" asp-items="ViewBag.Tipos"></select>
-                <span asp-validation-for="Tipo" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Observacao" class="control-label"></label>
-                <input asp-for="Observacao" class="form-control" />
-                <span asp-validation-for="Observacao" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="mb-4">
+        <h2 class="fw-bold">Nova Movimentação</h2>
+        <p class="text-muted">Registrar entrada ou saída</p>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card dashboard-card">
+        <div class="card-body">
+
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="MercadoriaId" class="form-label"></label>
+                        <select asp-for="MercadoriaId" class="form-control" asp-items="ViewBag.MercadoriaId"></select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Quantidade" class="form-label"></label>
+                        <input asp-for="Quantidade" class="form-control" />
+                        <span asp-validation-for="Quantidade" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DataHora" class="form-label"></label>
+                        <input asp-for="DataHora" class="form-control" />
+                        <span asp-validation-for="DataHora" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Tipo" class="form-label"></label>
+                        <select asp-for="Tipo" class="form-control" asp-items="ViewBag.Tipos"></select>
+                        <span asp-validation-for="Tipo" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Observacao" class="form-label"></label>
+                        <input asp-for="Observacao" class="form-control" />
+                        <span asp-validation-for="Observacao" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 </div>
 
 @section Scripts {

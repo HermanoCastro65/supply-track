@@ -2,15 +2,29 @@
     ViewData["Title"] = "Gráficos";
 }
 
-<div class="container mt-5">
+<div class="container-fluid dashboard-container">
 
-    <h2 class="mb-4 text-center">Estoque por Mercadoria</h2>
-    <canvas id="graficoEstoque"></canvas>
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold">Gráficos</h2>
+        <p class="text-muted">Visualização de dados e indicadores do sistema</p>
+    </div>
 
-    <hr class="my-5" />
+    <!-- GRÁFICO ESTOQUE -->
+    <div class="card dashboard-card mb-4">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-3">Estoque por Mercadoria</h5>
+            <canvas id="graficoEstoque" height="100"></canvas>
+        </div>
+    </div>
 
-    <h2 class="mb-4 text-center">Entradas x Saídas por Mês e Mercadoria</h2>
-    <canvas id="graficoMes"></canvas>
+    <!-- GRÁFICO MOVIMENTAÇÕES -->
+    <div class="card dashboard-card">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-3">Entradas x Saídas por Mês e Mercadoria</h5>
+            <canvas id="graficoMes" height="100"></canvas>
+        </div>
+    </div>
 
 </div>
 
@@ -20,22 +34,40 @@
     const estoque = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Estoque));
     const porMes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.PorMes));
 
-    // ===== GRÁFICO ESTOQUE =====
-    const nomes = estoque.map(x => x.nome);
-    const quantidades = estoque.map(x => x.quantidade);
-
+    /* ===== GRÁFICO ESTOQUE ===== */
     new Chart(document.getElementById('graficoEstoque'), {
     type: 'bar',
     data: {
-    labels: nomes,
+    labels: estoque.map(x => x.nome),
     datasets: [{
     label: 'Quantidade em Estoque',
-    data: quantidades
+    data: estoque.map(x => x.quantidade),
+    backgroundColor: '#475569', // cinza azulado elegante
+    borderRadius: 6
     }]
+    },
+    options: {
+    responsive: true,
+    plugins: {
+    legend: { display: false }
+    },
+    scales: {
+    y: {
+    beginAtZero: true,
+    grid: {
+    color: '#e2e8f0'
+    }
+    },
+    x: {
+    grid: {
+    display: false
+    }
+    }
+    }
     }
     });
 
-    // ===== ORGANIZA DADOS POR MERCADORIA =====
+    /* ===== ORGANIZA DADOS ===== */
     const agrupado = {};
 
     porMes.forEach(item => {
@@ -43,7 +75,6 @@
 
     if (!agrupado[key]) {
     agrupado[key] = {
-    label: key,
     entradas: item.entradas,
     saidas: item.saidas
     };
@@ -54,6 +85,7 @@
     const entradas = labels.map(l => agrupado[l].entradas);
     const saidas = labels.map(l => agrupado[l].saidas);
 
+    /* ===== GRÁFICO ENTRADAS x SAÍDAS ===== */
     new Chart(document.getElementById('graficoMes'), {
     type: 'bar',
     data: {
@@ -61,13 +93,44 @@
     datasets: [
     {
     label: 'Entradas',
-    data: entradas
+    data: entradas,
+    backgroundColor: '#4b7c5f', // verde sóbrio
+    borderRadius: 6
     },
     {
     label: 'Saídas',
-    data: saidas
+    data: saidas,
+    backgroundColor: '#8b5e5e', // vermelho sóbrio
+    borderRadius: 6
     }
     ]
+    },
+    options: {
+    responsive: true,
+    plugins: {
+    legend: {
+    position: 'top',
+    labels: {
+    color: '#334155',
+    font: {
+    size: 12
+    }
+    }
+    }
+    },
+    scales: {
+    y: {
+    beginAtZero: true,
+    grid: {
+    color: '#e2e8f0'
+    }
+    },
+    x: {
+    grid: {
+    display: false
+    }
+    }
+    }
     }
     });
 </script>

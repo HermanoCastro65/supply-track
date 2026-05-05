@@ -1,48 +1,43 @@
 @model SupplyTrack.Models.Mercadoria
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Details</h1>
+<div class="container-fluid dashboard-container">
 
-<div>
-    <h4>Mercadoria</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumeroRegistro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumeroRegistro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fabricante)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fabricante)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="mb-4">
+        <h2 class="fw-bold">Detalhes da Mercadoria</h2>
+    </div>
+
+    <div class="card dashboard-card">
+        <div class="card-body">
+
+            <dl class="row mb-0">
+
+                <dt class="col-sm-3">Nome</dt>
+                <dd class="col-sm-9">@Model.Nome</dd>
+
+                <dt class="col-sm-3">Registro</dt>
+                <dd class="col-sm-9">@Model.NumeroRegistro</dd>
+
+                <dt class="col-sm-3">Fabricante</dt>
+                <dd class="col-sm-9">@Model.Fabricante</dd>
+
+                <dt class="col-sm-3">Tipo</dt>
+                <dd class="col-sm-9">@Model.Tipo</dd>
+
+                <dt class="col-sm-3">Descrição</dt>
+                <dd class="col-sm-9">@Model.Descricao</dd>
+
+            </dl>
+
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+    </div>
+
 </div>

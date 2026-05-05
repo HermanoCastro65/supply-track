@@ -1,31 +1,179 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+/* ===== BASE ===== */
+html, body {
+    height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #f1f5f9;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+main {
+    flex: 1;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ===== NAVBAR ===== */
+.navbar-custom {
+    background: linear-gradient(90deg, #1e293b, #0f172a);
+    padding: 12px 0;
+}
+
+.logo-navbar {
+    height: 32px;
+}
+
+.navbar-custom .nav-link {
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffffff;
+}
+
+.navbar-custom .nav-link.active {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard-container {
+    padding: 30px 15px;
+}
+
+/* ===== CARDS ===== */
+.dashboard-card {
+    border: none;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+    transition: 0.25s;
+    position: relative;
+}
+
+.dashboard-card::before {
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: #334155;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ===== TABELAS ===== */
+.table thead {
+    background-color: #f8fafc;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e2e8f0;
+}
+
+/* ===== FORM ===== */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+}
+
+/* ===== BOTÕES ===== */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #334155;
+    border-color: #334155;
+}
+
+.btn-primary:hover {
+    background-color: #1e293b;
+}
+
+.btn-success {
+    background-color: #64748b;
+    border-color: #64748b;
+}
+
+.btn-success:hover {
+    background-color: #475569;
+}
+
+/* ===== BOTÕES OUTLINE CORRIGIDOS ===== */
+
+.btn-outline-primary {
+    color: #334155;
+    border-color: #cbd5e1;
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: #334155;
+    color: #ffffff;
+    border-color: #334155;
+}
+
+/* detalhes (cinza neutro) */
+.btn-outline-secondary {
+    color: #475569;
+    border-color: #cbd5e1;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #475569;
+    color: #ffffff;
+    border-color: #475569;
+}
+
+/* excluir (vermelho sóbrio) */
+.btn-outline-danger {
+    color: #8b5e5e;
+    border-color: #e2e8f0;
+}
+
+.btn-outline-danger:hover {
+    background-color: #8b5e5e;
+    color: #ffffff;
+    border-color: #8b5e5e;
+}
+
+/* ===== BADGES (ENTRADA x SAÍDA DIFERENCIADO) ===== */
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* ENTRADA → azul suave */
+.badge-entrada {
+    background-color: #64748b;
+    color: white;
+}
+
+/* SAÍDA → cinza mais escuro */
+.badge-saida {
+    background-color: #334155;
+    color: white;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    margin-top: auto;
+    padding: 15px 0;
+    border-top: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
 }
