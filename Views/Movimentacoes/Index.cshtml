@@ -1,62 +1,72 @@
 @model IEnumerable<SupplyTrack.Models.Movimentacao>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Movimentações";
 }
 
-<h1>Index</h1>
+<div class="container-fluid dashboard-container">
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-    <a asp-action="ExportarCSV" class="btn btn-success">Exportar CSV</a>
-</p>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h2 class="fw-bold mb-1">Movimentações</h2>
+            <p class="text-muted mb-0">Controle de entradas e saídas</p>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Mercadoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Observacao)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mercadoria!.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantidade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataHora)
-                </td>
-                <td>
-                    @item.Tipo.ToString()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Observacao)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-primary">+ Nova Movimentação</a>
+            <a asp-action="ExportarCSV" class="btn btn-success">Exportar CSV</a>
+        </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="card dashboard-card">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Mercadoria)</th>
+                            <th>@Html.DisplayNameFor(model => model.Quantidade)</th>
+                            <th>@Html.DisplayNameFor(model => model.DataHora)</th>
+                            <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Observacao)</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@item.Mercadoria!.Nome</td>
+                                <td>@item.Quantidade</td>
+                                <td>@item.DataHora</td>
+                                <td>
+                                    <span class="badge @(item.Tipo.ToString() == "Entrada" ? "bg-success" : "bg-danger")">
+                                        @item.Tipo.ToString()
+                                    </span>
+                                </td>
+                                <td class="text-muted">@item.Observacao</td>
+
+                                <td class="text-end">
+                                    <a asp-action="Edit" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-danger">Excluir</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>

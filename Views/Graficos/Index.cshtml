@@ -2,15 +2,29 @@
     ViewData["Title"] = "Gráficos";
 }
 
-<div class="container mt-5">
+<div class="container-fluid dashboard-container">
 
-    <h2 class="mb-4 text-center">Estoque por Mercadoria</h2>
-    <canvas id="graficoEstoque"></canvas>
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold">Gráficos</h2>
+        <p class="text-muted">Visualização de dados e indicadores do sistema</p>
+    </div>
 
-    <hr class="my-5" />
+    <!-- GRÁFICO ESTOQUE -->
+    <div class="card dashboard-card mb-4">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-3">Estoque por Mercadoria</h5>
+            <canvas id="graficoEstoque" height="100"></canvas>
+        </div>
+    </div>
 
-    <h2 class="mb-4 text-center">Entradas x Saídas por Mês e Mercadoria</h2>
-    <canvas id="graficoMes"></canvas>
+    <!-- GRÁFICO MOVIMENTAÇÕES -->
+    <div class="card dashboard-card">
+        <div class="card-body">
+            <h5 class="fw-semibold mb-3">Entradas x Saídas por Mês e Mercadoria</h5>
+            <canvas id="graficoMes" height="100"></canvas>
+        </div>
+    </div>
 
 </div>
 
@@ -30,8 +44,29 @@
     labels: nomes,
     datasets: [{
     label: 'Quantidade em Estoque',
-    data: quantidades
+    data: quantidades,
+    backgroundColor: '#3b82f6',
+    borderRadius: 6
     }]
+    },
+    options: {
+    responsive: true,
+    plugins: {
+    legend: { display: false }
+    },
+    scales: {
+    y: {
+    beginAtZero: true,
+    grid: {
+    color: '#e5e7eb'
+    }
+    },
+    x: {
+    grid: {
+    display: false
+    }
+    }
+    }
     }
     });
 
@@ -61,13 +96,38 @@
     datasets: [
     {
     label: 'Entradas',
-    data: entradas
+    data: entradas,
+    backgroundColor: '#22c55e',
+    borderRadius: 6
     },
     {
     label: 'Saídas',
-    data: saidas
+    data: saidas,
+    backgroundColor: '#ef4444',
+    borderRadius: 6
     }
     ]
+    },
+    options: {
+    responsive: true,
+    plugins: {
+    legend: {
+    position: 'top'
+    }
+    },
+    scales: {
+    y: {
+    beginAtZero: true,
+    grid: {
+    color: '#e5e7eb'
+    }
+    },
+    x: {
+    grid: {
+    display: false
+    }
+    }
+    }
     }
     });
 </script>

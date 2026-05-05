@@ -5,20 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SupplyTrack</title>
-    <script type="importmap"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SupplyTrack.styles.css" asp-append-version="true" />
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
             <div class="container-fluid px-4">
 
                 <!-- LOGO -->
-                <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
-                    <img src="~/logo-white.png" alt="Morning Star" class="logo-navbar">
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <img src="~/logo-white.png" alt="Morning Star" class="logo-navbar me-2">
                         <span class="fw-semibold">SupplyTrack</span>
                     </a>
 
@@ -27,22 +28,26 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarMain">
-                        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                        <ul class="navbar-nav ms-auto">
 
                             <li class="nav-item">
-                                <a class="nav-link active" asp-controller="Home" asp-action="Index">Dashboard</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
+                                   asp-controller="Home" asp-action="Index">Dashboard</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/Mercadorias">Mercadorias</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Mercadorias" ? "active" : "")"
+                                   href="/Mercadorias">Mercadorias</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/Movimentacoes">Movimentações</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Movimentacoes" ? "active" : "")"
+                                   href="/Movimentacoes">Movimentações</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/Graficos">Gráficos</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Graficos" ? "active" : "")"
+                                   href="/Graficos">Gráficos</a>
                             </li>
 
                         </ul>
@@ -51,21 +56,24 @@
                 </div>
             </nav>
         </header>
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
 
-        <footer class="border-top footer text-muted">
+        <main class="flex-fill">
+            <div class="container pb-3">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer class="footer text-muted">
             <div class="container">
                 &copy; 2026 - SupplyTrack
             </div>
         </footer>
+
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
+
     </body>
 
 </html>

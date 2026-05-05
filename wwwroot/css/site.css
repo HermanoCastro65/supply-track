@@ -1,10 +1,21 @@
 /* ===== BASE ===== */
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #f4f6f8;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
-/* ===== NAVBAR CUSTOM (ESTILO EMPRESA) ===== */
+/* conteúdo cresce */
+main {
+    flex: 1;
+}
+
+/* ===== NAVBAR ===== */
 .navbar-custom {
     background: linear-gradient(90deg, #1f2937, #111827);
     padding: 12px 0;
@@ -12,10 +23,9 @@ body {
 
 .logo-navbar {
     height: 32px;
-    object-fit: contain;
 }
 
-/* Links */
+/* links */
 .navbar-custom .nav-link {
     color: #d1d5db;
     font-weight: 500;
@@ -23,11 +33,12 @@ body {
 }
 
 .navbar-custom .nav-link:hover {
-    color: #22c55e; /* verde moderno */
+    color: #22c55e;
 }
 
 .navbar-custom .nav-link.active {
-    color: #22c55e;
+    color: #22c55e !important;
+    font-weight: 600;
 }
 
 /* ===== DASHBOARD ===== */
@@ -46,7 +57,6 @@ body {
     overflow: hidden;
 }
 
-/* efeito topo estilo empresa */
 .dashboard-card::before {
     content: "";
     position: absolute;
@@ -57,35 +67,23 @@ body {
     background: linear-gradient(90deg, #22c55e, #06b6d4);
 }
 
-/* hover premium */
 .dashboard-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== ICON ===== */
-.icon-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: white;
+/* ===== TABELAS ===== */
+.table thead {
+    background-color: #f9fafb;
 }
 
-/* cores alinhadas com a marca */
-.bg-primary {
-    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
 }
 
-.bg-success {
-    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
-}
-
-.bg-dark {
-    background: linear-gradient(135deg, #111827, #1f2937) !important;
+/* ===== FORM ===== */
+.form-control {
+    border-radius: 8px;
 }
 
 /* ===== BOTÕES ===== */
@@ -99,18 +97,24 @@ body {
     transform: translateY(-1px);
 }
 
-/* ===== TEXT ===== */
-h2 {
-    color: #111827;
+/* ===== BADGES ===== */
+.badge {
+    padding: 6px 10px;
+    border-radius: 6px;
 }
 
-.card-title {
-    color: #111827;
-}
-
-/* ===== FOOTER ===== */
+/* ===== FOOTER (CORRETO AGORA) ===== */
 .footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    margin-top: auto;
+    padding: 15px 0;
+    border-top: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
 }
