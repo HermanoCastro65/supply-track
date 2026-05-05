@@ -1,48 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">SupplyTrack</h1>
-    <p class="text-center text-muted mb-5">
-        Sistema de controle de estoque e movimentações
-    </p>
+<div class="container-fluid dashboard-container">
 
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold mb-1">Dashboard</h2>
+            <p class="text-muted mb-0">Visão geral do sistema SupplyTrack</p>
+        </div>
+        <div class="text-muted small">
+            @DateTime.Now.ToString("dddd, dd MMMM yyyy")
+        </div>
+    </div>
+
+    <!-- CARDS -->
     <div class="row g-4">
 
         <!-- MERCADORIAS -->
-        <div class="col-md-4">
-            <div class="card shadow h-100 text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Mercadorias</h5>
-                    <p class="card-text">Gerencie produtos cadastrados</p>
-                    <a href="/Mercadorias" class="btn btn-primary">
-                        Acessar
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                      
+                        <h5 class="card-title fw-semibold">Mercadorias</h5>
+                        <p class="card-text text-muted">
+                            Gerencie produtos cadastrados no sistema
+                        </p>
+                    </div>
+
+                    <a href="/Mercadorias" class="btn btn-primary w-100 mt-3">
+                        Acessar módulo
                     </a>
                 </div>
             </div>
         </div>
 
         <!-- MOVIMENTAÇÕES -->
-        <div class="col-md-4">
-            <div class="card shadow h-100 text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Movimentações</h5>
-                    <p class="card-text">Controle entradas e saídas</p>
-                    <a href="/Movimentacoes" class="btn btn-success">
-                        Acessar
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        
+                        <h5 class="card-title fw-semibold">Movimentações</h5>
+                        <p class="card-text text-muted">
+                            Controle entradas e saídas de estoque
+                        </p>
+                    </div>
+
+                    <a href="/Movimentacoes" class="btn btn-success w-100 mt-3">
+                        Acessar módulo
                     </a>
                 </div>
             </div>
         </div>
 
         <!-- GRÁFICOS -->
-        <div class="col-md-4">
-            <div class="card shadow h-100 text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Gráficos</h5>
-                    <p class="card-text">Visualize relatórios</p>
-                    <a href="/Graficos" class="btn btn-dark">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        
+                        <h5 class="card-title fw-semibold">Gráficos</h5>
+                        <p class="card-text text-muted">
+                            Visualize relatórios e indicadores
+                        </p>
+                    </div>
+
+                    <a href="/Graficos" class="btn btn-dark w-100 mt-3">
                         Ver gráficos
                     </a>
                 </div>
@@ -50,4 +76,5 @@
         </div>
 
     </div>
+
 </div>
